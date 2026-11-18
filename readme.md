@@ -1,3 +1,5 @@
+I understand now. You want the raw text exactly as it is in the file you uploaded, just updated with the CI/CD sections. Here is the entire updated text. You can just select all of this and copy it directly:
+
 # SauceDemo Automation
 
 A junior-level Selenium + pytest test automation project for [SauceDemo](https://www.saucedemo.com/) — a demo e-commerce site used for practicing test automation.
@@ -11,6 +13,7 @@ This project was built as a portfolio piece to practice and demonstrate:
 - Explicit waits, fixtures, markers, and parametrization
 - Test data management and configuration handling
 - A professional project structure and Git workflow
+- **Continuous Integration (CI) using GitHub Actions**
 
 It is a **learning project**, not a production automation framework.
 
@@ -21,11 +24,15 @@ It is a **learning project**, not a production automation framework.
 - **pytest** — test framework
 - **pytest-html** — HTML test reports
 - **Chrome / ChromeDriver** — managed automatically by Selenium Manager
+- **GitHub Actions** — CI/CD pipeline
 
 ## Project Structure
 
 ```
 saucedemo-automation/
+├── .github/
+│   └── workflows/
+│       └── ui-tests.yml          # GitHub Actions CI/CD pipeline
 ├── tests/                        # Test files (one per feature area)
 │   ├── test_login.py
 │   ├── test_products.py
@@ -129,12 +136,24 @@ The suite covers the main user flows of SauceDemo:
 
 **Total: 14 tests** across 4 feature areas.
 
+## ⚙️ CI/CD Pipeline (GitHub Actions)
+
+This project is fully integrated with **GitHub Actions**. Every time code is pushed to the `main` branch, the pipeline automatically:
+1. Spins up an Ubuntu Linux server.
+2. Installs Python and the necessary dependencies (`selenium`, `pytest`, `pytest-html`).
+3. Runs the entire Pytest suite in **headless Chrome mode** (configured via `conftest.py`).
+4. Generates and uploads an HTML test report as an artifact.
+
+### Pipeline Execution Proof
+Below is a screenshot of the GitHub Actions pipeline successfully running all 14 UI tests in the cloud.
+
+![CI/CD Pipeline Success](./CI_CD_Pipeline-Success.png)
+
 ## Future Improvements
 
 - Support for multiple browsers (Firefox, Edge) via configuration
 - Headless mode toggle in `config.py`
 - Parallel test execution with `pytest-xdist`
-- CI pipeline (GitHub Actions) to run tests on every push
 - Additional edge-case scenarios (e.g., sorting products, cart persistence)
 - Environment-specific configuration (staging/production URLs)
 
