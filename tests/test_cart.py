@@ -68,9 +68,9 @@ def test_remove_item_from_cart(driver):
 
     cart_page = CartPage(driver)
     cart_page.remove_item(BACKPACK)
-
-    WebDriverWait(driver, 20).until(
-        EC.invisibility_of_element_located((By.CSS_SELECTOR, "[data-test='inventory-item-name']"))
+ 
+     WebDriverWait(driver, 20).until(
+        lambda driver: len(driver.find_elements(By.CSS_SELECTOR, "[data-test='inventory-item-name']")) == 0
     )
 
     items = driver.find_elements(By.CSS_SELECTOR, "[data-test='inventory-item-name']")
