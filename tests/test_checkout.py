@@ -1,4 +1,8 @@
 import pytest
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 from pages.login_page import LoginPage
 from pages.products_page import ProductsPage
 from pages.cart_page import CartPage
@@ -26,6 +30,11 @@ def _go_to_checkout(driver, product_name=BACKPACK):
 
     cart_page = CartPage(driver)
     cart_page.click_checkout()
+    
+    # --- THE FIX: Wait for the Checkout page URL to load ---
+    WebDriverWait(driver, 10).until(
+        EC.url_contains("checkout-step-one.html")
+    )
 
 
 @pytest.mark.regression
@@ -45,10 +54,20 @@ def test_successful_checkout(driver):
 
     checkout_page.fill_form(CHECKOUT_FIRST_NAME, CHECKOUT_LAST_NAME, CHECKOUT_POSTAL_CODE)
     checkout_page.click_continue()
+    
+    # --- THE FIX: Wait for the Summary page to load before checking the total ---
+    WebDriverWait(driver, 10).until(
+        EC.url_contains("checkout-step-two.html")
+    )
 
     assert checkout_page.get_total().startswith("Total: $")
 
     checkout_page.click_finish()
+    
+    # --- THE FIX: Wait for the Confirmation page to load before asserting ---
+    WebDriverWait(driver, 10).until(
+        EC.url_contains("checkout-complete.html")
+    )
 
     assert checkout_page.get_confirmation_message() == "Thank you for your order!"
 
@@ -61,6 +80,11 @@ def test_checkout_total_is_correct(driver):
 
     checkout_page.fill_form(CHECKOUT_FIRST_NAME, CHECKOUT_LAST_NAME, CHECKOUT_POSTAL_CODE)
     checkout_page.click_continue()
+    
+    # --- THE FIX: Wait for the Summary page to load before grabbing the total ---
+    WebDriverWait(driver, 10).until(
+        EC.url_contains("checkout-step-two.html")
+    )
 
     total_text = checkout_page.get_total()
     total_value = float(total_text.split("$")[1])
