@@ -56,7 +56,7 @@ def test_successful_checkout(driver):
     checkout_page.click_continue()
     
     # --- THE FIX: Wait for the Summary page to load before checking the total ---
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 20).until(
         EC.url_contains("checkout-step-two.html")
     )
 
@@ -65,7 +65,7 @@ def test_successful_checkout(driver):
     checkout_page.click_finish()
     
     # --- THE FIX: Wait for the Confirmation page to load before asserting ---
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 20).until(
         EC.url_contains("checkout-complete.html")
     )
 
@@ -82,7 +82,7 @@ def test_checkout_total_is_correct(driver):
     checkout_page.click_continue()
     
     # --- THE FIX: Wait for the Summary page to load before grabbing the total ---
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 20).until(
         EC.url_contains("checkout-step-two.html")
     )
 

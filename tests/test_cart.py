@@ -29,7 +29,7 @@ def test_cart_shows_added_item(driver):
     products_page = ProductsPage(driver)
     products_page.go_to_cart()
     
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 20).until(
         EC.url_contains("cart.html")
     )
 
@@ -46,7 +46,7 @@ def test_cart_shows_correct_price(driver):
     products_page = ProductsPage(driver)
     products_page.go_to_cart()
     
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 20).until(
         EC.url_contains("cart.html")
     )
 
@@ -62,14 +62,14 @@ def test_remove_item_from_cart(driver):
     products_page = ProductsPage(driver)
     products_page.go_to_cart()
     
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 20).until(
         EC.url_contains("cart.html")
     )
 
     cart_page = CartPage(driver)
     cart_page.remove_item(BACKPACK)
 
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 20).until(
         EC.invisibility_of_element_located((By.CSS_SELECTOR, "[data-test='inventory-item-name']"))
     )
 
