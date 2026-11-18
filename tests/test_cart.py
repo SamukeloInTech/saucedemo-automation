@@ -1,5 +1,8 @@
 import pytest
+
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from pages.login_page import LoginPage
 from pages.products_page import ProductsPage
 from pages.cart_page import CartPage
@@ -53,5 +56,10 @@ def test_remove_item_from_cart(driver):
     cart_page = CartPage(driver)
     cart_page.remove_item(BACKPACK)
 
+    WebDriverWait(driver, 10).until(
+        EC.invisibility_of_element_located((By.CSS_SELECTOR, "[data-test='inventory-item-name']"))
+    )
+
+   
     items = driver.find_elements(By.CSS_SELECTOR, "[data-test='inventory-item-name']")
     assert len(items) == 0
