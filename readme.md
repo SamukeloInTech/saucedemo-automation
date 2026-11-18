@@ -1,5 +1,3 @@
-I understand now. You want the raw text exactly as it is in the file you uploaded, just updated with the CI/CD sections. Here is the entire updated text. You can just select all of this and copy it directly:
-
 # SauceDemo Automation
 
 A junior-level Selenium + pytest test automation project for [SauceDemo](https://www.saucedemo.com/) — a demo e-commerce site used for practicing test automation.
