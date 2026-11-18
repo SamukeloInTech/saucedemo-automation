@@ -58,20 +58,21 @@ def test_cart_shows_correct_price(driver):
 @pytest.mark.cart
 def test_remove_item_from_cart(driver):
     _login_and_add_item(driver, BACKPACK)
-
+    
     products_page = ProductsPage(driver)
     products_page.go_to_cart()
     
     WebDriverWait(driver, 20).until(
         EC.url_contains("cart.html")
     )
-
+    
     cart_page = CartPage(driver)
     cart_page.remove_item(BACKPACK)
- 
-     WebDriverWait(driver, 20).until(
+    
+    # Wait until the list of items on the page is completely empty (length == 0)
+    WebDriverWait(driver, 20).until(
         lambda driver: len(driver.find_elements(By.CSS_SELECTOR, "[data-test='inventory-item-name']")) == 0
     )
-
+    
     items = driver.find_elements(By.CSS_SELECTOR, "[data-test='inventory-item-name']")
     assert len(items) == 0
